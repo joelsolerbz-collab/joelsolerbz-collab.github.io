@@ -20,8 +20,10 @@
     header{background:var(--white);border-bottom:1px solid #eee;position:sticky;top:0;z-index:50}
     .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0}
-    .brand{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--red)}
-    .brand .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--red),#ff4b4b);display:inline-flex;align-items:center;justify-content:center;color:var(--white);font-weight:800}
+  .brand{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--red)}
+  .brand .logo{width:44px;height:44px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--white);font-weight:800;overflow:hidden}
+  .brand .logo img{width:100%;height:100%;object-fit:cover;display:block}
+  .header-image{width:84px;height:52px;border-radius:8px;object-fit:cover}
     nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
     nav a{padding:.5rem .75rem;border-radius:6px}
     nav a:hover{background:#fff4f4}
@@ -36,9 +38,10 @@
     }
 
     /* Hero */
-    .hero{position:relative;min-height:70vh;display:flex;align-items:center}
-    .hero__bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1544213456-bc4f0d4f7f6e?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;filter:grayscale(.05) brightness(.85);}
-    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.72) 0%, rgba(255,255,255,.82) 60%);}
+    .hero{position:relative;min-height:85vh;display:flex;align-items:center}
+  .hero__bg{position:absolute;inset:0;background-image:url('https://www.2playbook.com/uploads/s1/39/92/67/lifter-crew-valencia-8.jpeg');background-size:cover;background-position:center;filter:brightness(.86);} 
+    /* overlay mantiene legibilidad del contenido sin ocultar la imagen de fondo */
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.62) 0%, rgba(255,255,255,.82) 65%);}
     .hero__content{position:relative;z-index:2;padding:3rem 0;display:flex;align-items:center}
     .hero-card{background:var(--white);padding:2rem;border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,.06);max-width:760px}
     .hero h1{margin:0 0 .5rem;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--red)}
@@ -53,6 +56,7 @@
     .grid{display:grid;gap:1rem;grid-template-columns:repeat(3,1fr)}
     @media(max-width:900px){.grid{grid-template-columns:1fr}}
     .card{background:var(--white);padding:1.25rem;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.04)}
+  .service-img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:.75rem}
 
     /* FAQ */
     details{background:var(--white);padding:1rem;border-radius:10px;margin-bottom:.75rem}
@@ -65,6 +69,14 @@
     form .full{grid-column:1/-1}
     input,textarea,select{padding:.65rem;border:1px solid #e6e6e6;border-radius:8px;width:100%;font-size:1rem}
     .note{font-size:.9rem;color:#666}
+
+  /* separador rojo */
+  hr.sep{height:6px;border:0;background:linear-gradient(90deg,var(--red),#ff6b6b);border-radius:6px;margin:1.25rem 0}
+
+  /* estrellas para opiniones */
+  .rating{display:flex;gap:.25rem;align-items:center;margin-top:.5rem}
+  .rating svg{width:18px;height:18px;fill:#e6e6e6}
+  .rating svg.filled{fill:var(--red)}
 
     footer{padding:2rem 0;border-top:1px solid #eee;background:transparent}
 
@@ -111,7 +123,19 @@
   <header>
     <div class="container nav">
       <div class="brand">
-        <div class="logo" aria-hidden>O</div>
+        <div class="logo" aria-hidden>
+          <!-- SVG logo: mancuernas -->
+          <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo mancuernas" preserveAspectRatio="xMidYMid meet">
+            <rect width="64" height="64" rx="8" fill="var(--red)"/>
+            <g transform="translate(6,20)" fill="#fff">
+              <rect x="0" y="12" width="52" height="8" rx="2" />
+              <rect x="-6" y="6" width="6" height="20" rx="1" />
+              <rect x="52" y="6" width="6" height="20" rx="1" />
+              <rect x="-12" y="8" width="6" height="16" rx="1" />
+              <rect x="58" y="8" width="6" height="16" rx="1" />
+            </g>
+          </svg>
+        </div>
         <div>
           <div style="font-size:.95rem">Gimnasio</div>
           <div style="font-size:.95rem;font-weight:800">Olympia</div>
@@ -128,6 +152,7 @@
             <li><a class="cta-desktop" href="#contacto">Contactar</a></li>
           </ul>
         </nav>
+  <!-- imagen pequeña en cabecera eliminada a petición del usuario -->
       </div>
     </div>
   </header>
@@ -138,11 +163,12 @@
       <div class="hero__overlay"></div>
       <div class="container hero__content">
         <div class="hero-card">
+          <!-- imagen decorativa eliminada: ahora la foto se usa como fondo del hero -->
           <h1>Gimnasio Olympia</h1>
           <p class="muted">Entrena con programas personalizados y entrenadores certificados. Más fuerza, mejor salud y comunidad que te motiva.</p>
           <p class="note">Abierto todos los días — Clases grupales, entrenadores personales, zona de pesas y cardio.</p>
           <div style="margin-top:1rem;display:flex;gap:.6rem;align-items:center">
-            <button class="btn" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Call to action — Contactar</button>
+            <button class="btn" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Contactar</button>
             <a class="btn secondary" href="#servicios">Ver servicios</a>
           </div>
         </div>
@@ -156,16 +182,23 @@
 
     <section id="servicios" class="container">
       <h2>Servicios</h2>
+      <hr class="sep">
       <div class="grid">
         <div class="card">
+          <!-- imagen Entrenamiento Personal (Unsplash) -->
+          <img class="service-img" loading="lazy" src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=800&q=80" alt="Entrenador personal ayudando a cliente en pesas">
           <h3>Entrenamiento Personal</h3>
           <p class="muted">Planes a medida, seguimiento, y coaching 1:1 con entrenadores certificados.</p>
         </div>
         <div class="card">
+          <!-- imagen Clases Grupales (Unsplash - búsqueda dinámica) -->
+          <img class="service-img" loading="lazy" src="https://source.unsplash.com/800x600/?group,fitness,class,workout" alt="Clases grupales practicando ejercicio">
           <h3>Clases Grupales</h3>
           <p class="muted">Yoga, HIIT, Spinning, Boxeo y más. Horarios para todos los niveles.</p>
         </div>
         <div class="card">
+          <!-- imagen Zona Cardio y Pesas (Unsplash) -->
+          <img class="service-img" loading="lazy" src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&fit=crop&w=800&q=80" alt="Persona entrenando en zona de pesas y cardio">
           <h3>Zona Cardio y Pesas</h3>
           <p class="muted">Máquinas modernas, áreas libres y asesoría en técnica.</p>
         </div>
@@ -174,6 +207,7 @@
 
     <section id="faq" class="container">
       <h2>Preguntas frecuentes</h2>
+      <hr class="sep">
       <details>
         <summary>¿Necesito experiencia previa para asistir?</summary>
         <p class="muted">No. Tenemos programas para principiantes con seguimiento y clases de introducción.</p>
@@ -190,13 +224,28 @@
 
     <section id="opiniones" class="container">
       <h2>Opiniones</h2>
+      <hr class="sep">
       <div class="testi">
         <div class="card">
           <strong>Laura G.</strong>
+          <div class="rating" aria-hidden>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+          </div>
           <p class="muted">"Me encantan las clases de HIIT; los entrenadores son muy atentos. He mejorado mucho en 3 meses."</p>
         </div>
         <div class="card">
           <strong>Marco R.</strong>
+          <div class="rating" aria-hidden>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg class="filled" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.847 1.416 8.268L12 19.771 4.584 23.863 6 15.596 0 9.748l8.332-1.73z"/></svg>
+          </div>
           <p class="muted">"El seguimiento personalizado me ayudó a superar una lesión y volver más fuerte."</p>
         </div>
       </div>
