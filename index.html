@@ -1,11 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Gimnasio Olympia</title>
+  <meta name="description" content="Gimnasio Olympia - Entrena con los mejores. Programas personalizados, entrenadores certificados y un ambiente motivador.">
+  <style>
+    :root{
+      --red:#c8102e;
+      --white:#ffffff;
+      --bg:#fafafa;
+      --text:#222;
+      --max-width:1200px;
+      --radius:10px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; color:var(--text);background:var(--bg);}
+    a{color:var(--red);text-decoration:none}
+    header{background:var(--white);border-bottom:1px solid #eee;position:sticky;top:0;z-index:50}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0}
+    .brand{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--red)}
+    .brand .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--red),#ff4b4b);display:inline-flex;align-items:center;justify-content:center;color:var(--white);font-weight:800}
+    nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
+    nav a{padding:.5rem .75rem;border-radius:6px}
+    nav a:hover{background:#fff4f4}
+    .cta-desktop{background:var(--red);color:var(--white);padding:.5rem .9rem;border-radius:6px}
+
+    /* mobile */
+    .nav-toggle{display:none;background:none;border:0;font-size:1.25rem}
+    @media(max-width:900px){
+      nav ul{position:fixed;right:1rem;top:64px;flex-direction:column;background:var(--white);padding:1rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.08);display:none}
+      nav ul.open{display:flex}
+      .nav-toggle{display:inline-block}
+    }
+
+    /* Hero */
+    .hero{position:relative;min-height:70vh;display:flex;align-items:center}
+    .hero__bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1544213456-bc4f0d4f7f6e?auto=format&fit=crop&w=1600&q=80');background-size:cover;background-position:center;filter:grayscale(.05) brightness(.85);}
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.72) 0%, rgba(255,255,255,.82) 60%);}
+    .hero__content{position:relative;z-index:2;padding:3rem 0;display:flex;align-items:center}
+    .hero-card{background:var(--white);padding:2rem;border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,.06);max-width:760px}
+    .hero h1{margin:0 0 .5rem;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--red)}
+    .hero p{margin:0 0 1rem;color:#444}
+    .hero .cta{display:inline-flex;gap:.5rem;align-items:center}
+    .btn{background:var(--red);color:var(--white);padding:.6rem 1rem;border-radius:8px;border:0;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid var(--red);color:var(--red)}
+
+    /* Sections */
+    section{padding:3rem 0}
+    h2{color:var(--red);margin-top:0}
+    .grid{display:grid;gap:1rem;grid-template-columns:repeat(3,1fr)}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--white);padding:1.25rem;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.04)}
+
+    /* FAQ */
+    details{background:var(--white);padding:1rem;border-radius:10px;margin-bottom:.75rem}
+
+    /* Testimonials */
+    .testi{display:flex;flex-direction:column;gap:.75rem}
+
+    /* Contact form */
+    form{display:grid;gap:.75rem;grid-template-columns:repeat(2,1fr)}
+    form .full{grid-column:1/-1}
+    input,textarea,select{padding:.65rem;border:1px solid #e6e6e6;border-radius:8px;width:100%;font-size:1rem}
+    .note{font-size:.9rem;color:#666}
+
+    footer{padding:2rem 0;border-top:1px solid #eee;background:transparent}
+
+    /* small tweaks */
+    .muted{color:#666}
+  </style>
+  <script>
+    // Pequeña JS para interacción: menú, smooth scroll y validación simple
+    document.addEventListener('DOMContentLoaded',()=>{
+      const toggle=document.getElementById('navToggle');
+      const menu=document.getElementById('navList');
+      toggle?.addEventListener('click',()=>{menu.classList.toggle('open')});
+
+      // smooth scroll for internal links
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click',e=>{
+          const targetId=a.getAttribute('href').slice(1);
+          const target=document.getElementById(targetId);
+          if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});menu.classList.remove('open')}
+        })
+      })
+
+      // form handling
+      const form=document.getElementById('contactForm');
+      form?.addEventListener('submit',e=>{
+        e.preventDefault();
+        const name=form.querySelector('[name="name"]').value.trim();
+        const email=form.querySelector('[name="email"]').value.trim();
+        const message=form.querySelector('[name="message"]').value.trim();
+        if(!name||!email||!message){
+          alert('Por favor completa los campos obligatorios: Nombre, correo y mensaje.');
+          return;
+        }
+        // Simular envío
+        form.querySelectorAll('input,textarea,button').forEach(el=>el.disabled=true);
+        setTimeout(()=>{
+          form.innerHTML='<div style="padding:1.5rem;background:#f6fffa;border-radius:8px;border:1px solid #e6f7ef"><h3>¡Gracias!</h3><p class="muted">Hemos recibido tu mensaje. Te contactaremos pronto.</p></div>'
+        },800)
+      })
+    })
+  </script>
 </head>
 <body>
-  
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden>O</div>
+        <div>
+          <div style="font-size:.95rem">Gimnasio</div>
+          <div style="font-size:.95rem;font-weight:800">Olympia</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <button id="navToggle" class="nav-toggle" aria-label="Abrir menú">☰</button>
+        <nav aria-label="Navegación principal">
+          <ul id="navList">
+            <li><a href="#descripcion">Descripción</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
+            <li><a href="#opiniones">Opiniones</a></li>
+            <li><a class="cta-desktop" href="#contacto">Contactar</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__bg" role="img" aria-label="Persona ejercitándose en gimnasio"></div>
+      <div class="hero__overlay"></div>
+      <div class="container hero__content">
+        <div class="hero-card">
+          <h1>Gimnasio Olympia</h1>
+          <p class="muted">Entrena con programas personalizados y entrenadores certificados. Más fuerza, mejor salud y comunidad que te motiva.</p>
+          <p class="note">Abierto todos los días — Clases grupales, entrenadores personales, zona de pesas y cardio.</p>
+          <div style="margin-top:1rem;display:flex;gap:.6rem;align-items:center">
+            <button class="btn" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Call to action — Contactar</button>
+            <a class="btn secondary" href="#servicios">Ver servicios</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="descripcion" class="container">
+      <h2>Descripción</h2>
+      <p class="muted">En Gimnasio Olympia nos enfocamos en ofrecer un espacio seguro y profesional para que alcances tus objetivos. Ya sea pérdida de peso, ganancia muscular o mejorar tu salud general, tenemos el plan y el equipo humano para apoyarte.</p>
+    </section>
+
+    <section id="servicios" class="container">
+      <h2>Servicios</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Entrenamiento Personal</h3>
+          <p class="muted">Planes a medida, seguimiento, y coaching 1:1 con entrenadores certificados.</p>
+        </div>
+        <div class="card">
+          <h3>Clases Grupales</h3>
+          <p class="muted">Yoga, HIIT, Spinning, Boxeo y más. Horarios para todos los niveles.</p>
+        </div>
+        <div class="card">
+          <h3>Zona Cardio y Pesas</h3>
+          <p class="muted">Máquinas modernas, áreas libres y asesoría en técnica.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="container">
+      <h2>Preguntas frecuentes</h2>
+      <details>
+        <summary>¿Necesito experiencia previa para asistir?</summary>
+        <p class="muted">No. Tenemos programas para principiantes con seguimiento y clases de introducción.</p>
+      </details>
+      <details>
+        <summary>¿Ofrecen evaluaciones físicas?</summary>
+        <p class="muted">Sí, realizamos una evaluación inicial y mediciones para diseñar tu plan.</p>
+      </details>
+      <details>
+        <summary>¿Qué medidas de seguridad e higiene aplican?</summary>
+        <p class="muted">Limpieza frecuente, estaciones con desinfectante y control de aforo en clases.</p>
+      </details>
+    </section>
+
+    <section id="opiniones" class="container">
+      <h2>Opiniones</h2>
+      <div class="testi">
+        <div class="card">
+          <strong>Laura G.</strong>
+          <p class="muted">"Me encantan las clases de HIIT; los entrenadores son muy atentos. He mejorado mucho en 3 meses."</p>
+        </div>
+        <div class="card">
+          <strong>Marco R.</strong>
+          <p class="muted">"El seguimiento personalizado me ayudó a superar una lesión y volver más fuerte."</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="container">
+      <h2>Contacto</h2>
+      <p class="muted">Rellena el formulario y nuestro equipo te contactará lo antes posible.</p>
+      <form id="contactForm" aria-label="Formulario de contacto">
+        <label class="full">Nombre completo*<input name="name" type="text" required placeholder="Tu nombre"></label>
+        <label>Email*<input name="email" type="email" required placeholder="tu@correo.com"></label>
+        <label>Teléfono<input name="phone" type="tel" placeholder="Opcional"></label>
+        <label class="full">Mensaje*<textarea name="message" rows="5" required placeholder="¿En qué podemos ayudarte?"></textarea></label>
+        <div class="full" style="display:flex;gap:.5rem;align-items:center">
+          <button class="btn" type="submit">Enviar</button>
+          <button class="btn secondary" type="reset">Limpiar</button>
+          <span class="muted" style="margin-left:auto;font-size:.9rem">O llámanos: <strong>(+34) 600 000 000</strong></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>
+        <strong>Gimnasio Olympia</strong>
+        <div class="muted">Carrer Falsa 123 · Ciudad · España</div>
+      </div>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <a href="#" aria-label="Instagram" title="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="var(--red)"/><path d="M7.5 11.96a4.42 4.42 0 014.42-4.42c2.44 0 4.42 1.98 4.42 4.42s-1.98 4.42-4.42 4.42A4.42 4.42 0 017.5 11.96z" fill="#fff"/></svg></a>
+        <a href="#" aria-label="Facebook" title="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#1877F2"/><path d="M14 7h-1.2c-1 0-1.3.5-1.3 1.2V9h2.5l-.3 2.3h-2.2V20H9V11.3H7v-2.3h2V8.1c0-2 1.2-3.1 3-3.1h2z" fill="#fff"/></svg></a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
